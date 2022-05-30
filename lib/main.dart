@@ -9,9 +9,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter form',
       theme: ThemeData(
-        focusColor: const Color(0xFF132E7F),
+        primarySwatch:Colors.teal
       ),
       home: const MyHomePage(title: 'Flutter Formulaire'),
     );
@@ -38,88 +39,94 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Form(
-        key: _formKey,
-        child: Column(mainAxisAlignment: MainAxisAlignment.center,
-         children: [
-          TextFormField(
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Form(
+          key: _formKey,
+          child: Column(mainAxisAlignment: MainAxisAlignment.center,
+           children: [
+            TextFormField(
+                decoration: const InputDecoration(
+                labelText: "Nom",
+              ),
+              controller: nameController,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Entrer du texte';
+                }
+                return null;
+              },
+            ),
+            TextFormField(
+                decoration: const InputDecoration(
+                labelText: "Prénom"
+              ),
+              controller: subNameController,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Entrer du texte';
+                }
+                return null;
+              },
+            ),
+            TextFormField(
               decoration: const InputDecoration(
-              labelText: "Nom",
+              labelText: "E-mail"
+              ),
+              controller: emailController,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Entrer du texte';
+                }
+                return null;
+              },
             ),
-            controller: nameController,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Entrer du texte';
-              }
-              return null;
-            },
-          ),
-          TextFormField(
+            TextFormField(
               decoration: const InputDecoration(
-              labelText: "Prénom"
+              labelText: "Password"
+              ),
+              obscureText: true,
+              controller: passwordController,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Entrer du texte';
+                }
+                return null;
+              },
             ),
-            controller: subNameController,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Entrer du texte';
-              }
-              return null;
-            },
-          ),
-          TextFormField(
-            decoration: const InputDecoration(
-            labelText: "E-mail"
+            TextFormField(
+              decoration: const InputDecoration(
+                labelText: "Confirm password"
+              ),
+              obscureText: true,
+              controller: passwordConfirmController,
+              validator: (value) {
+                if (value != passwordController.text) {
+                  return 'Mauvais mot de passe';
+                }
+                
+                return null;
+              },
             ),
-            controller: emailController,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Entrer du texte';
-              }
-              return null;
-            },
-          ),
-          TextFormField(
-            decoration: const InputDecoration(
-            labelText: "Password"
+            Padding(
+              padding: const EdgeInsets.only(top: 22),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(primary: Colors.green),
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: ((context) => ResultPage(
+                              name: nameController.text,
+                              subName: subNameController.text,
+                              email: emailController.text,
+                            ))));
+                  }
+                },
+                child: const Text('Confirmer'),
+              ),
             ),
-            obscureText: true,
-            controller: passwordController,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Entrer du texte';
-              }
-              return null;
-            },
-          ),
-          TextFormField(
-            decoration: const InputDecoration(
-              labelText: "Confirm password"
-            ),
-            obscureText: true,
-            controller: passwordConfirmController,
-            validator: (value) {
-              // ignore: unrelated_type_equality_checks
-              if (value != passwordController.text) {
-                return 'Mauvais mot de passe';
-              }
-              return null;
-            },
-          ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(primary: Colors.green),
-            onPressed: () {
-              if (_formKey.currentState!.validate()) {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: ((context) => ResultPage(
-                          name: nameController.text,
-                          subName: subNameController.text,
-                          email: emailController.text,
-                        ))));
-              }
-            },
-            child: const Text('Confirmer'),
-          ),
-        ]),
+          ]),
+        ),
       ),
     );
   }
