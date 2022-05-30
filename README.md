@@ -1,6 +1,9 @@
-# flutter_application_2
+## Flutter Form
 
-A new Flutter project.
+Flutter form, project for Greta Grand Hainaut.
+
+Using Dart Framework --> Flutter
+
 
 ## Getting Started
 
