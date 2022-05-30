@@ -39,6 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: const Text("Formulaire Flutter"), centerTitle: true,),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Form(
